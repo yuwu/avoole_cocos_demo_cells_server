@@ -20,7 +20,7 @@ package com.avoole.mm.protocol.mqtt.handler.downstream.impl;
 import java.util.List;
 import java.util.Set;
 
-import com.avoole.codec.mqtt.MqttUnsubscribeMessage;
+import com.avoole.common.codec.mqtt.MqttUnsubscribeMessage;
 import com.avoole.mm.common.data.Message;
 import com.avoole.mm.common.util.MessageUtil;
 import com.avoole.mm.connection.client.Client;

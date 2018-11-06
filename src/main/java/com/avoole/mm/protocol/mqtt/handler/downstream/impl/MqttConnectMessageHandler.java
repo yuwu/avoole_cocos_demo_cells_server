@@ -17,9 +17,9 @@
 
 package com.avoole.mm.protocol.mqtt.handler.downstream.impl;
 
-import com.avoole.codec.mqtt.MqttConnAckMessage;
-import com.avoole.codec.mqtt.MqttConnectMessage;
-import com.avoole.codec.mqtt.MqttConnectReturnCode;
+import com.avoole.common.codec.mqtt.MqttConnAckMessage;
+import com.avoole.common.codec.mqtt.MqttConnectMessage;
+import com.avoole.common.codec.mqtt.MqttConnectReturnCode;
 import io.netty.channel.ChannelHandlerContext;
 import com.avoole.mm.common.configuration.ChannelConfiguration;
 import com.avoole.mm.common.data.Message;

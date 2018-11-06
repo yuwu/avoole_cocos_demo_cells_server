@@ -17,7 +17,7 @@
 
 package com.avoole.mm.protocol.mqtt.handler;
 
-import com.avoole.codec.mqtt.MqttMessage;
+import com.avoole.common.codec.mqtt.MqttMessage;
 import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;

@@ -17,10 +17,10 @@
 
 package com.avoole.mm.protocol.mqtt.handler.downstream.impl;
 
-import com.avoole.codec.mqtt.MqttMessage;
-import com.avoole.codec.mqtt.MqttPubAckMessage;
-import com.avoole.codec.mqtt.MqttPublishMessage;
-import com.avoole.codec.mqtt.MqttQoS;
+import com.avoole.common.codec.mqtt.MqttMessage;
+import com.avoole.common.codec.mqtt.MqttPubAckMessage;
+import com.avoole.common.codec.mqtt.MqttPublishMessage;
+import com.avoole.common.codec.mqtt.MqttQoS;
 import com.avoole.mm.common.data.Message;
 import com.avoole.mm.connection.client.Client;
 import com.avoole.mm.protocol.mqtt.handler.MessageHandler;

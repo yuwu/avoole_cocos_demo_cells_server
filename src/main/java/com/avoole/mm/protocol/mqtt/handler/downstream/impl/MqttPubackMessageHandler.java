@@ -19,7 +19,7 @@ package com.avoole.mm.protocol.mqtt.handler.downstream.impl;
 
 import java.util.List;
 
-import com.avoole.codec.mqtt.MqttPubAckMessage;
+import com.avoole.common.codec.mqtt.MqttPubAckMessage;
 import com.avoole.mm.common.data.Message;
 import com.avoole.mm.protocol.mqtt.data.MqttClient;
 import com.avoole.mm.protocol.mqtt.handler.MessageHandler;

@@ -17,7 +17,7 @@
 
 package com.avoole.mm.protocol.mqtt.handler.downstream;
 
-import com.avoole.codec.mqtt.MqttMessage;
+import com.avoole.common.codec.mqtt.MqttMessage;
 
 public interface SendCallback {
     /**

@@ -17,8 +17,8 @@
 
 package com.avoole.mm;
 
-import com.avoole.codec.mqtt.MqttDecoder;
-import com.avoole.codec.mqtt.MqttEncoder;
+import com.avoole.common.codec.mqtt.MqttDecoder;
+import com.avoole.common.codec.mqtt.MqttEncoder;
 import com.avoole.mm.common.configuration.MQTTBridgeConfiguration;
 import com.avoole.mm.common.data.Message;
 import com.avoole.mm.connection.client.ClientManager;

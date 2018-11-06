@@ -17,7 +17,7 @@
 
 package com.avoole.mm.protocol.mqtt.handler.downstream.impl;
 
-import com.avoole.codec.mqtt.MqttPublishMessage;
+import com.avoole.common.codec.mqtt.MqttPublishMessage;
 import com.avoole.mm.common.data.Message;
 import com.avoole.mm.protocol.mqtt.handler.MessageHandler;
 

@@ -20,10 +20,10 @@ package com.avoole.mm.protocol.mqtt.handler.downstream.impl;
 import java.util.ArrayList;
 import java.util.List;
 
-import com.avoole.codec.mqtt.MqttSubAckMessage;
-import com.avoole.codec.mqtt.MqttSubAckPayload;
-import com.avoole.codec.mqtt.MqttSubscribeMessage;
-import com.avoole.codec.mqtt.MqttTopicSubscription;
+import com.avoole.common.codec.mqtt.MqttSubAckMessage;
+import com.avoole.common.codec.mqtt.MqttSubAckPayload;
+import com.avoole.common.codec.mqtt.MqttSubscribeMessage;
+import com.avoole.common.codec.mqtt.MqttTopicSubscription;
 import com.avoole.mm.common.data.Message;
 import com.avoole.mm.connection.client.Client;
 import com.avoole.mm.protocol.mqtt.data.MqttClient;

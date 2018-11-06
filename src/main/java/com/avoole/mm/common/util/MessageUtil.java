@@ -17,7 +17,7 @@
 
 package com.avoole.mm.common.util;
 
-import com.avoole.codec.mqtt.*;
+import com.avoole.common.codec.mqtt.*;
 import io.netty.buffer.ByteBuf;
 import io.netty.buffer.Unpooled;
 import com.avoole.mm.protocol.mqtt.constant.MqttConstant;
