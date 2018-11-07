@@ -1,6 +1,5 @@
 package com.avoole.cells;
 
-import com.avoole.mm.connection.client.Client;
 import io.netty.channel.Channel;
 
 import java.util.concurrent.ConcurrentHashMap;

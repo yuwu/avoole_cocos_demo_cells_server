@@ -1,5 +1,11 @@
 package com.avoole.cells;
 
+import com.avoole.cells.data.Message;
+import com.avoole.cells.handler.ConnectMessageHandler;
+import com.avoole.cells.handler.DisconnectMessageHandler;
+import com.avoole.cells.handler.PlayerJoinMessageHandler;
+import com.avoole.cells.storage.WorldStore;
+import com.avoole.cells.storage.impl.InMemoryWorldStore;
 import com.avoole.mm.common.configuration.MQTTBridgeConfiguration;
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.channel.ChannelFuture;
@@ -21,8 +27,10 @@ public class Main {
     private ServerBootstrap serverBootstrap;
     private NioEventLoopGroup bossGroup;
     private NioEventLoopGroup workerGroup;
-
     private ClientManager clientManager;
+    private MessageDispatcher messageDispatcher;
+    private WorldStore worldStore;
+    private WSConnectionHandler connectionHandler;
 
     public Main() {
         init();
@@ -43,12 +51,24 @@ public class Main {
                         pipeline.addLast("http-codec",new HttpServerCodec());
                         pipeline.addLast("aggregator",new HttpObjectAggregator(65536));
                         pipeline.addLast("ws-codec", new WebSocketServerProtocolHandler("/ws"));
-                        pipeline.addLast("message-handler", new MessageHandler(clientManager));
-                        pipeline.addLast("connection-manager", new WebSocketConnectionHandler(clientManager));
+                        pipeline.addLast("message-handler", messageDispatcher);
+                        pipeline.addLast("connection-manager", connectionHandler);
                     }
                 });
 
+        worldStore = new InMemoryWorldStore();
         clientManager = new ClientManager();
+        messageDispatcher = new MessageDispatcher(clientManager);
+        connectionHandler = new WSConnectionHandler(clientManager, worldStore);
+        registerMessageHandlers();
+    }
+
+    private void registerMessageHandlers() {
+        messageDispatcher.registerHandler(Message.Type.Connect, new ConnectMessageHandler(clientManager));
+        messageDispatcher.registerHandler(Message.Type.Disconnect, new DisconnectMessageHandler(clientManager));
+
+        messageDispatcher.registerHandler(Message.Type.PlayerJoin, new PlayerJoinMessageHandler(worldStore));
+        messageDispatcher.registerHandler(Message.Type.PlayerUpdate, new PlayerJoinMessageHandler(worldStore));
     }
 
     public void start() {

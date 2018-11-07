@@ -55,6 +55,6 @@ public enum MqttConnectReturnCode {
         if (VALUE_TO_CODE_MAP.containsKey(b)) {
             return VALUE_TO_CODE_MAP.get(b);
         }
-        throw new IllegalArgumentException("unknown connect return code: " + (b & 0xFF));
+        throw new IllegalArgumentException("unknown Connect return code: " + (b & 0xFF));
     }
 }

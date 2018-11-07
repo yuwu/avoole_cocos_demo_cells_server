@@ -65,7 +65,7 @@ public class MqttConnectionHandler extends ChannelInboundHandlerAdapter {
     }
 
     /**
-     * disconnect the channel, save the Subscription of the client which the channel belongs to if CleanSession
+     * Disconnect the channel, save the Subscription of the client which the channel belongs to if CleanSession
      * if set to <b>false</b>, otherwise discard them
      *
      * @param channel

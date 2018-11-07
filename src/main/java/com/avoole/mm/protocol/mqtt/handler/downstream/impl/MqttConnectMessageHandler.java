@@ -56,7 +56,7 @@ public class MqttConnectMessageHandler implements MessageHandler {
         } else if (!isAuthorized(connectMessage)) {
             returnCode = MqttConnectReturnCode.CONNECTION_REFUSED_NOT_AUTHORIZED;
         } else if (client.isConnected()) {
-            // protocol violation and disconnect
+            // protocol violation and Disconnect
             ctx.fireUserEventTriggered(new DisconnectChannelEvent(ctx.channel()));
             return;
         } else if (!isServiceAviable(connectMessage)) {

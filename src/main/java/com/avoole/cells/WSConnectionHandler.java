@@ -1,8 +1,7 @@
 package com.avoole.cells;
 
+import com.avoole.cells.storage.WorldStore;
 import com.avoole.mm.DisconnectChannelEvent;
-import com.avoole.mm.connection.client.Client;
-import com.avoole.mm.protocol.mqtt.data.MqttClient;
 import io.netty.channel.Channel;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.ChannelInboundHandlerAdapter;
@@ -11,14 +10,16 @@ import io.netty.handler.timeout.IdleStateEvent;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
-public class WebSocketConnectionHandler extends ChannelInboundHandlerAdapter {
+public class WSConnectionHandler extends ChannelInboundHandlerAdapter {
 
-    private static final Logger log = LoggerFactory.getLogger(WebSocketConnectionHandler.class);
+    private static final Logger log = LoggerFactory.getLogger(WSConnectionHandler.class);
 
     private ClientManager clientManager;
+    private WorldStore worldStore;
 
-    public WebSocketConnectionHandler(ClientManager clientManager) {
+    public WSConnectionHandler(ClientManager clientManager, WorldStore store) {
         this.clientManager = clientManager;
+        this.worldStore = store;
     }
 
     @Override
@@ -32,7 +33,7 @@ public class WebSocketConnectionHandler extends ChannelInboundHandlerAdapter {
                doDisconnect(ctx.channel());
            }
        }
-        ctx.fireUserEventTriggered(evt);
+       ctx.fireUserEventTriggered(evt);
     }
 
     @Override public void exceptionCaught(ChannelHandlerContext ctx, Throwable cause) throws Exception {
@@ -43,7 +44,7 @@ public class WebSocketConnectionHandler extends ChannelInboundHandlerAdapter {
     }
 
     /**
-     * disconnect the channel, save the Subscription of the client which the channel belongs to if CleanSession
+     * Disconnect the channel, save the Subscription of the client which the channel belongs to if CleanSession
      * if set to <b>false</b>, otherwise discard them
      *
      * @param channel
@@ -52,8 +53,9 @@ public class WebSocketConnectionHandler extends ChannelInboundHandlerAdapter {
         if (channel == null) {
             return;
         }
-        MqttClient client = (MqttClient) clientManager.get(channel);
+        Client client = clientManager.get(channel);
         if (client != null) {
+            worldStore.removePlayer(client.getId());
             clientManager.remove(channel);
         }
         channel.close();

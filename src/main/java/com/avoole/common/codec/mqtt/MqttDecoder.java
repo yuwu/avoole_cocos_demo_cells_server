@@ -231,7 +231,7 @@ public final class MqttDecoder extends ReplayingDecoder<DecoderState> {
             final boolean zeroReservedFlag = (b1 & 0x01) == 0x0;
             if (!zeroReservedFlag) {
                 // MQTT v3.1.1: The Server MUST validate that the reserved flag in the CONNECT Control Packet is
-                // set to zero and disconnect the Client if it is not zero.
+                // set to zero and Disconnect the Client if it is not zero.
                 // See http://docs.oasis-open.org/mqtt/mqtt/v3.1.1/os/mqtt-v3.1.1-os.html#_Toc385349230
                 throw new DecoderException("non-zero reserved flag");
             }

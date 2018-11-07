@@ -15,33 +15,32 @@
  * limitations under the License.
  */
 
-package com.avoole.mm.protocol.mqtt.handler.downstream.impl;
+package com.avoole.cells.handler;
 
-import com.avoole.mm.common.data.Message;
-import com.avoole.mm.connection.client.ClientManager;
-import com.avoole.mm.protocol.mqtt.handler.MessageHandler;
+import com.avoole.cells.Client;
+import com.avoole.cells.data.Message;
 
-public class MqttDisconnectMessageHandler implements MessageHandler {
-
-    private ClientManager clientManager;
-
-    public MqttDisconnectMessageHandler(ClientManager clientManager) {
-        this.clientManager = clientManager;
-    }
+public class PingMessageHandler implements MessageHandler {
 
     /**
-     * handle the DISCONNECT message from the client
+     * handle the PINGREQ message from client
      * <ol>
-     *     <li>discard the Will Message and Will Topic</li>
-     *     <li>remove the client from the ClientManager</li>
-     *     <li>Disconnect the connection</li>
+     * <li>check client exists</li>
+     * <li>check client is connected</li>
+     * <li>generate the PINGRESP message</li>
+     * <li>send the PINGRESP message to the client</li>
      * </ol>
+     *
      * @param message
      * @return
      */
     @Override public void handleMessage(Message message) {
-        // TODO discard the Will Message and Will Topic
-        clientManager.remove(message.getClient().getCtx().channel());
-        message.getClient().getCtx().disconnect();
+        Client client = message.getClient();
+        if (client == null || !client.isConnected()) {
+            return ;
+        }
+//        Message pingreqMessage = (Message) message.getPayload();
+//        MqttMessage pingrespMessage = MessageUtil.getMqttPingrespMessage(pingreqMessage);
+//        client.getCtx().writeAndFlush(pingrespMessage);
     }
 }
