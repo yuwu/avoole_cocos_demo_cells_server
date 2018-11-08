@@ -1,9 +1,8 @@
 package com.avoole.cells;
 
 import com.avoole.cells.data.Message;
-import com.avoole.cells.handler.ConnectMessageHandler;
-import com.avoole.cells.handler.DisconnectMessageHandler;
-import com.avoole.cells.handler.PlayerJoinMessageHandler;
+import com.avoole.cells.data.MessageType;
+import com.avoole.cells.handler.*;
 import com.avoole.cells.storage.WorldStore;
 import com.avoole.cells.storage.impl.InMemoryWorldStore;
 import com.avoole.mm.common.configuration.MQTTBridgeConfiguration;
@@ -64,11 +63,20 @@ public class Main {
     }
 
     private void registerMessageHandlers() {
-        messageDispatcher.registerHandler(Message.Type.Connect, new ConnectMessageHandler(clientManager));
-        messageDispatcher.registerHandler(Message.Type.Disconnect, new DisconnectMessageHandler(clientManager));
+        messageDispatcher.registerHandler(MessageType.Connect, new ConnectMessageHandler(clientManager));
+        messageDispatcher.registerHandler(MessageType.Disconnect, new DisconnectMessageHandler(clientManager));
 
-        messageDispatcher.registerHandler(Message.Type.PlayerJoin, new PlayerJoinMessageHandler(worldStore));
-        messageDispatcher.registerHandler(Message.Type.PlayerUpdate, new PlayerJoinMessageHandler(worldStore));
+        // world
+        messageDispatcher.registerHandler(MessageType.World, new WorldMessageHandler(worldStore));
+
+        // palyers
+        messageDispatcher.registerHandler(MessageType.PlayerJoin, new PlayerJoinMessageHandler(worldStore));
+        messageDispatcher.registerHandler(MessageType.PlayerUpdate, new PlayerUpdateMessageHandler(worldStore));
+        messageDispatcher.registerHandler(MessageType.PlayerDeath, new PlayerDeathMessageHandler(worldStore));
+
+        // cells
+        messageDispatcher.registerHandler(MessageType.CellJoin, new CellsJoinMessageHandler(worldStore));
+        messageDispatcher.registerHandler(MessageType.CellDeath, new PlayerDeathMessageHandler(worldStore));
     }
 
     public void start() {

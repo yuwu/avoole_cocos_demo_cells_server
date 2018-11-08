@@ -1,6 +1,7 @@
 package com.avoole.cells;
 
 import com.avoole.cells.data.Message;
+import com.avoole.cells.data.MessageType;
 import com.avoole.cells.handler.MessageHandler;
 import com.avoole.cells.util.MessageUtil;
 import io.netty.channel.ChannelHandlerContext;
@@ -12,7 +13,7 @@ import java.util.HashMap;
 import java.util.Map;
 
 public class MessageDispatcher extends SimpleChannelInboundHandler<WebSocketFrame> {
-    private Map<Message.Type, MessageHandler> type2handler = new HashMap<>();
+    private Map<MessageType, MessageHandler> type2handler = new HashMap<>();
 
     ClientManager clientManager;
 
@@ -20,12 +21,12 @@ public class MessageDispatcher extends SimpleChannelInboundHandler<WebSocketFram
         this.clientManager = clientManager;
     }
 
-    public void registerHandler(Message.Type type, MessageHandler handler) {
+    public void registerHandler(MessageType type, MessageHandler handler) {
         type2handler.put(type, handler);
     }
 
     private void dispatch(Message message) {
-        Message.Type type = message.getType();
+        MessageType type = message.getType();
         if (!type2handler.containsKey(type)) {
             return;
         }

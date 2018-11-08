@@ -36,7 +36,7 @@ public class InMemoryWorldStore implements WorldStore {
             x = InMemoryWorldStore.range(x, 0.01f, this.width);
 
             Cell cell = new Cell();
-            cell.setId(String.valueOf(atomic.getAndIncrement()));
+            cell.setId(getUniqueId());
             cell.setPosition(new Vec2(x, y));
             cell.setHp(0.5f);
             Color color = this.getRandomColor();
@@ -47,6 +47,16 @@ public class InMemoryWorldStore implements WorldStore {
     }
 
     @Override
+    public int getWidth() {
+        return width;
+    }
+
+    @Override
+    public int getHeight() {
+        return height;
+    }
+
+    @Override
     public List<Cell> getCells() {
         return cells.values().stream().collect(Collectors.toList());
     }
@@ -54,6 +64,13 @@ public class InMemoryWorldStore implements WorldStore {
     @Override
     public void removeCells(String id) {
         this.cells.remove(id);
+    }
+
+    @Override
+    public Player newPlayer() {
+        Player player = new Player();
+        player.setId(getUniqueId());
+        return player;
     }
 
     @Override
@@ -73,6 +90,7 @@ public class InMemoryWorldStore implements WorldStore {
 
     @Override
     public void addPlayer(Player player) {
+        
         this.players.put(player.getId(), player);
     }
 
@@ -99,5 +117,9 @@ public class InMemoryWorldStore implements WorldStore {
     Color getRandomColor(){
         int index = (int)(Math.random() * (this.colors.length-1));
         return this.colors[index];
+    }
+
+    public String getUniqueId(){
+        return String.valueOf(atomic.getAndIncrement());
     }
 }

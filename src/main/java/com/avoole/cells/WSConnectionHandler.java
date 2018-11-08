@@ -55,7 +55,7 @@ public class WSConnectionHandler extends ChannelInboundHandlerAdapter {
         }
         Client client = clientManager.get(channel);
         if (client != null) {
-            worldStore.removePlayer(client.getId());
+            worldStore.removePlayer(client);
             clientManager.remove(channel);
         }
         channel.close();

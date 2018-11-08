@@ -5,16 +5,12 @@ import com.avoole.cells.Client;
 import com.avoole.cells.data.Message;
 import com.avoole.cells.data.Player;
 import com.avoole.cells.storage.WorldStore;
-import com.avoole.cells.util.MessageUtil;
-import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 
-import java.util.List;
-
-public class PlayerJoinMessageHandler implements MessageHandler {
+public class CellJoinMessageHandler implements MessageHandler {
 
     private WorldStore store;
 
-    public PlayerJoinMessageHandler(WorldStore store) {
+    public CellJoinMessageHandler(WorldStore store) {
         this.store = store;
     }
 
@@ -26,11 +22,6 @@ public class PlayerJoinMessageHandler implements MessageHandler {
         }
 
         Player player = store.newPlayer();
-        List<Player> players = store.getPlayers();
 
-
-
-        WebSocketFrame frame = MessageUtil.getMessageWorld(message);
-        message.getClient().getCtx().writeAndFlush(frame);
     }
 }
