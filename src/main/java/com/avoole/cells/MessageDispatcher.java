@@ -4,6 +4,7 @@ import com.avoole.cells.data.Message;
 import com.avoole.cells.data.MessageType;
 import com.avoole.cells.handler.MessageHandler;
 import com.avoole.cells.util.MessageUtil;
+import io.netty.channel.ChannelHandler;
 import io.netty.channel.ChannelHandlerContext;
 import io.netty.channel.SimpleChannelInboundHandler;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
@@ -12,6 +13,7 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 import java.util.HashMap;
 import java.util.Map;
 
+@ChannelHandler.Sharable
 public class MessageDispatcher extends SimpleChannelInboundHandler<WebSocketFrame> {
     private Map<MessageType, MessageHandler> type2handler = new HashMap<>();
 

@@ -44,7 +44,7 @@ public class WorldMessageHandler implements MessageHandler {
         newMessage.setType(MessageType.World);
         newMessage.setPayload(payload);
 
-        WebSocketFrame frame = MessageUtil.getMessageWorld(message);
+        WebSocketFrame frame = MessageUtil.getMessageWorld(newMessage);
         message.getClient().getCtx().writeAndFlush(frame);
     }
 }

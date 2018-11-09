@@ -1,6 +1,5 @@
 package com.avoole.cells;
 
-import com.avoole.cells.data.Message;
 import com.avoole.cells.data.MessageType;
 import com.avoole.cells.handler.*;
 import com.avoole.cells.storage.WorldStore;

@@ -46,7 +46,7 @@ public class PlayerJoinMessageHandler implements MessageHandler {
         Message newMessage = new Message();
         newMessage.setPayload(payload);
 
-        WebSocketFrame frame = MessageUtil.getMessageWorld(newMessage);
+        WebSocketFrame frame = MessageUtil.getMessagePlayerJoin(newMessage);
         for(Player player : players){
             player.getClient().getCtx().writeAndFlush(frame);
         }

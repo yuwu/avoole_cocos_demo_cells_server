@@ -1,6 +1,7 @@
 package com.avoole.cells.data;
 
 import com.alibaba.fastjson.annotation.JSONField;
+import com.alibaba.fastjson.annotation.JSONType;
 import com.avoole.cells.Client;
 
 import java.util.Map;
@@ -37,10 +38,22 @@ public class Message {
         this.headers = headers;
     }
 
+    @JSONField(name = "type")
+    public int getMessageType() {
+        return type.value();
+    }
+
+    @JSONField(name = "type")
+    public void setMessageType(int type) {
+        this.type = MessageType.valueOf(type);
+    }
+
+    @JSONField(serialize = false)
     public MessageType getType() {
         return type;
     }
 
+    @JSONField(serialize = false)
     public void setType(MessageType type) {
         this.type = type;
     }

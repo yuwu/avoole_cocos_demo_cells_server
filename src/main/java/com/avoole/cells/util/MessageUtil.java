@@ -1,33 +1,33 @@
 package com.avoole.cells.util;
 
 import com.alibaba.fastjson.JSON;
-import com.alibaba.fastjson.JSONArray;
 import com.alibaba.fastjson.JSONObject;
-import com.alibaba.fastjson.TypeReference;
+import com.alibaba.fastjson.serializer.SerializeConfig;
 import com.avoole.cells.data.Cell;
 import com.avoole.cells.data.Message;
 import com.avoole.cells.data.MessageType;
 import com.avoole.cells.data.Player;
-import com.avoole.cells.handler.MessageHandler;
-import com.avoole.common.codec.mqtt.MqttPublishMessage;
 import io.netty.handler.codec.http.websocketx.TextWebSocketFrame;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 
 import java.util.HashMap;
-import java.util.List;
 import java.util.Map;
 
 public class MessageUtil {
 
     private static Map<MessageType, Class> type2payload = new HashMap<>();
 
+    private static SerializeConfig globalJson = SerializeConfig.getGlobalInstance();
+
     static {
         type2payload.put(MessageType.CellJoin, Cell.class);
         type2payload.put(MessageType.CellDeath, Cell.class);
-
         type2payload.put(MessageType.PlayerUpdate, Player.class);
         type2payload.put(MessageType.PlayerJoin, Player.class);
         type2payload.put(MessageType.PlayerDeath, Player.class);
+
+        //globalJson.put(Message.class, EnumSerializer.INSTANCE);
+//        globalJson.put(MessageType.class, EnumSerializer.INSTANCE);
     }
 
     public static Message getMessage(WebSocketFrame webSocketFrame) {
@@ -42,8 +42,16 @@ public class MessageUtil {
         Map headers = json.getObject("headers", HashMap.class);
 
         MessageType messageType = MessageType.valueOf(type);
-        Class payloadClass = type2payload.getOrDefault(messageType, HashMap.class);
-        Object payload = json.getObject("payload", payloadClass);
+
+        Object payload = null;
+        try {
+
+            Class payloadClass = type2payload.getOrDefault(messageType, HashMap.class);
+            payload = json.getObject("payload", payloadClass);
+        }catch (Exception ex){
+            //
+            //ex.printStackTrace();
+        }
 
         Message message = new Message();
         message.setType(messageType);
