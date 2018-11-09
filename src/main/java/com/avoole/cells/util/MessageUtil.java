@@ -53,6 +53,13 @@ public class MessageUtil {
         return message;
     }
 
+    public static WebSocketFrame getMessageConnack(Message message) {
+        message.setType(MessageType.Connack);
+        String json = JSON.toJSONString(message);
+        TextWebSocketFrame frame = new TextWebSocketFrame(json);
+        return frame;
+    }
+
     public static WebSocketFrame getMessageWorld(Message message) {
         message.setType(MessageType.World);
         String json = JSON.toJSONString(message);

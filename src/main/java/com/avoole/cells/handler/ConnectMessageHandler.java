@@ -3,6 +3,8 @@ package com.avoole.cells.handler;
 import com.avoole.cells.Client;
 import com.avoole.cells.ClientManager;
 import com.avoole.cells.data.Message;
+import com.avoole.cells.util.MessageUtil;
+import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 
 public class ConnectMessageHandler implements MessageHandler {
 
@@ -19,5 +21,8 @@ public class ConnectMessageHandler implements MessageHandler {
             return;
         }
         client.setConnected(true);
+
+        WebSocketFrame frame = MessageUtil.getMessageConnack(message);
+        client.getCtx().writeAndFlush(frame);
     }
 }
