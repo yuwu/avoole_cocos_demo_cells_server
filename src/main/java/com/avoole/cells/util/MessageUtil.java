@@ -66,4 +66,18 @@ public class MessageUtil {
         TextWebSocketFrame frame = new TextWebSocketFrame(json);
         return frame;
     }
+
+    public static WebSocketFrame getMessagePlayerUpdate(Message message) {
+        message.setType(MessageType.PlayerUpdate);
+        String json = JSON.toJSONString(message);
+        TextWebSocketFrame frame = new TextWebSocketFrame(json);
+        return frame;
+    }
+
+    public static WebSocketFrame getMessagePlayerDeath(Message message) {
+        message.setType(MessageType.PlayerDeath);
+        String json = JSON.toJSONString(message);
+        TextWebSocketFrame frame = new TextWebSocketFrame(json);
+        return frame;
+    }
 }

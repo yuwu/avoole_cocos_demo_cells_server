@@ -75,8 +75,8 @@ public class Main {
         messageDispatcher.registerHandler(MessageType.PlayerDeath, new PlayerDeathMessageHandler(worldStore));
 
         // cells
-        messageDispatcher.registerHandler(MessageType.CellJoin, new CellsJoinMessageHandler(worldStore));
-        messageDispatcher.registerHandler(MessageType.CellDeath, new PlayerDeathMessageHandler(worldStore));
+        messageDispatcher.registerHandler(MessageType.CellJoin, new CellJoinMessageHandler(worldStore));
+        messageDispatcher.registerHandler(MessageType.CellDeath, new CellDeathMessageHandler(worldStore));
     }
 
     public void start() {
