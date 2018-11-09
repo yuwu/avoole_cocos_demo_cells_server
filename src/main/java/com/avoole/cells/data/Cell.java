@@ -41,4 +41,10 @@ public class Cell {
     public void setPosition(Vec2 position) {
         this.position = position;
     }
+
+    public void setState(Cell cell){
+        this.hp = cell.hp;
+        this.color = cell.color;
+        this.position = cell.position;
+    }
 }

@@ -25,11 +25,18 @@ public class PlayerUpdateMessageHandler implements MessageHandler {
             return;
         }
 
+        Player targetPlayer = (Player)message.getPayload();
+        if(!store.hasPlayer(targetPlayer)){
+            return;
+        }
+        store.updatePlayer(targetPlayer);
+
         Message newMessage = new Message();
+        newMessage.setPayload(targetPlayer);
+
+        WebSocketFrame frame = MessageUtil.getMessagePlayerUpdate(newMessage);
         List<Player> players = store.getPlayers();
         for(Player player : players){
-            newMessage.setPayload(player);
-            WebSocketFrame frame = MessageUtil.getMessagePlayerUpdate(newMessage);
             player.getClient().getCtx().writeAndFlush(frame);
         }
     }

@@ -29,6 +29,7 @@ public class PlayerJoinMessageHandler implements MessageHandler {
         }
 
         Player targetPlayer = (Player)message.getPayload();
+        targetPlayer.setClient(message.getClient());
         store.addPlayer(targetPlayer);
 
         List<Cell> cells = store.getCells();
@@ -45,7 +46,7 @@ public class PlayerJoinMessageHandler implements MessageHandler {
         Message newMessage = new Message();
         newMessage.setPayload(payload);
 
-        WebSocketFrame frame = MessageUtil.getMessageWorld(message);
+        WebSocketFrame frame = MessageUtil.getMessageWorld(newMessage);
         for(Player player : players){
             player.getClient().getCtx().writeAndFlush(frame);
         }

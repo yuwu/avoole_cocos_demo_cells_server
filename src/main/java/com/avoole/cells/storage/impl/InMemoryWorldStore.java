@@ -1,5 +1,6 @@
 package com.avoole.cells.storage.impl;
 
+import com.avoole.cells.Client;
 import com.avoole.cells.data.Cell;
 import com.avoole.cells.data.Color;
 import com.avoole.cells.data.Player;
@@ -62,8 +63,8 @@ public class InMemoryWorldStore implements WorldStore {
     }
 
     @Override
-    public void removeCells(String id) {
-        this.cells.remove(id);
+    public void removeCell(Cell cell) {
+        this.cells.remove(cell.getId(), cell);
     }
 
     @Override
@@ -80,7 +81,26 @@ public class InMemoryWorldStore implements WorldStore {
 
     @Override
     public Player getPlayer(String id) {
-        return this.players.get(id);
+        return players.get(id);
+    }
+
+    @Override
+    public Player getPlayer(Client client) {
+        List<Player> players = getPlayers();
+        for(Player player : players){
+            if(client.equals(player.getClient())){
+                return player;
+            }
+        }
+        return null;
+    }
+
+    @Override
+    public void updatePlayer(Player player) {
+        Player oldPlayer = players.get(player.getId());
+        if(oldPlayer != null) {
+            oldPlayer.setState(player);
+        }
     }
 
     @Override
@@ -90,15 +110,24 @@ public class InMemoryWorldStore implements WorldStore {
 
     @Override
     public void addPlayer(Player player) {
-        
+        if(!hasPlayer(player)){
+            player.setId(getUniqueId());
+        }
         this.players.put(player.getId(), player);
     }
 
     @Override
-    public void removePlayer(String id) {
-        this.players.remove(id);
+    public void removePlayer(Client client) {
+        Player player = this.getPlayer(client);
+        if(player != null){
+            this.removePlayer(player);
+        }
     }
 
+    @Override
+    public void removePlayer(Player player) {
+        this.players.remove(player.getId(), player);
+    }
 
     @Override
     public void start() {

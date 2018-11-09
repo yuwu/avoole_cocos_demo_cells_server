@@ -35,4 +35,9 @@ public class Player extends Cell {
     public void setNickname(String nickname) {
         this.nickname = nickname;
     }
+
+    public void setState(Player player) {
+        super.setState(player);
+        this.velocity = player.velocity;
+    }
 }

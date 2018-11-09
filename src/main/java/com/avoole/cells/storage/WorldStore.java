@@ -1,5 +1,6 @@
 package com.avoole.cells.storage;
 
+import com.avoole.cells.Client;
 import com.avoole.cells.data.Cell;
 import com.avoole.cells.data.Player;
 import com.avoole.cells.data.Vec2;
@@ -14,19 +15,25 @@ public interface WorldStore {
 
     List<Cell> getCells();
 
-    void removeCells(String id);
+    void removeCell(Cell cell);
+
+    Player getPlayer(String id);
+
+    Player getPlayer(Client client);
 
     List<Player> getPlayers();
 
     Player newPlayer();
 
-    Player getPlayer(String id);
+    void updatePlayer(Player player);
 
     boolean hasPlayer(Player player);
 
     void addPlayer(Player player);
 
-    void removePlayer(String id);
+    void removePlayer(Client client);
+
+    void removePlayer(Player player);
 
     /**
      * Start the Session Store
