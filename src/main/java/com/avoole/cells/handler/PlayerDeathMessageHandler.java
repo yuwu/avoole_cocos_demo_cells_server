@@ -7,6 +7,7 @@ import com.avoole.cells.data.Player;
 import com.avoole.cells.storage.WorldStore;
 import com.avoole.cells.util.MessageUtil;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.util.ReferenceCountUtil;
 
 import java.util.List;
 
@@ -37,7 +38,8 @@ public class PlayerDeathMessageHandler implements MessageHandler {
         WebSocketFrame frame = MessageUtil.getMessagePlayerDeath(newMessage);
         List<Player> players = store.getPlayers();
         for(Player player : players){
-            player.getClient().getCtx().writeAndFlush(frame);
+            player.getClient().getCtx().write(frame);
         }
+        ReferenceCountUtil.release(frame);
     }
 }

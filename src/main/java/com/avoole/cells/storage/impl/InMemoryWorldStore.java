@@ -13,7 +13,7 @@ import java.util.concurrent.atomic.AtomicInteger;
 import java.util.stream.Collectors;
 
 public class InMemoryWorldStore implements WorldStore {
-    private final AtomicInteger atomic = new AtomicInteger(0);
+    private final AtomicInteger atomic = new AtomicInteger(1);
 
     private ConcurrentHashMap<String, Cell> cells = new ConcurrentHashMap<>();
     private ConcurrentHashMap<String, Player> players = new ConcurrentHashMap<>();
@@ -68,13 +68,6 @@ public class InMemoryWorldStore implements WorldStore {
     }
 
     @Override
-    public Player newPlayer() {
-        Player player = new Player();
-        player.setId(getUniqueId());
-        return player;
-    }
-
-    @Override
     public List<Player> getPlayers() {
         return players.values().stream().collect(Collectors.toList());
     }
@@ -105,13 +98,14 @@ public class InMemoryWorldStore implements WorldStore {
 
     @Override
     public boolean hasPlayer(Player player) {
+        if(player == null || player.getId() == null) return false;
         return this.players.containsKey(player.getId());
     }
 
     @Override
     public void addPlayer(Player player) {
-        if(!hasPlayer(player)){
-            player.setId(getUniqueId());
+        if(hasPlayer(player)){
+            return;
         }
         this.players.put(player.getId(), player);
     }

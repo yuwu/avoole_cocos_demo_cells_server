@@ -12,9 +12,11 @@ import io.netty.handler.codec.http.websocketx.WebSocketFrame;
 
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.atomic.AtomicInteger;
 
 @ChannelHandler.Sharable
 public class MessageDispatcher extends SimpleChannelInboundHandler<WebSocketFrame> {
+    private final AtomicInteger atomic = new AtomicInteger(1);
     private Map<MessageType, MessageHandler> type2handler = new HashMap<>();
 
     ClientManager clientManager;
@@ -42,6 +44,7 @@ public class MessageDispatcher extends SimpleChannelInboundHandler<WebSocketFram
         Client client = clientManager.get(ctx.channel());
         if (client == null) {
             client = new Client();
+            client.setId(String.valueOf(atomic.incrementAndGet()));
             client.setCtx(ctx);
             clientManager.put(ctx.channel(), client);
         }

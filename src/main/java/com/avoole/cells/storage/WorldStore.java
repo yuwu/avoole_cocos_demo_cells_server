@@ -23,8 +23,6 @@ public interface WorldStore {
 
     List<Player> getPlayers();
 
-    Player newPlayer();
-
     void updatePlayer(Player player);
 
     boolean hasPlayer(Player player);

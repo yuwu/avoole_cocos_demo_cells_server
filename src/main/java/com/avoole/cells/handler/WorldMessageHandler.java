@@ -39,6 +39,7 @@ public class WorldMessageHandler implements MessageHandler {
         payload.put("height", height);
         payload.put("cells", cells);
         payload.put("players", players);
+        payload.put("client", client.getId());
 
         Message newMessage = new Message();
         newMessage.setType(MessageType.World);

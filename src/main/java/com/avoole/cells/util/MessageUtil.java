@@ -3,6 +3,7 @@ package com.avoole.cells.util;
 import com.alibaba.fastjson.JSON;
 import com.alibaba.fastjson.JSONObject;
 import com.alibaba.fastjson.serializer.SerializeConfig;
+import com.alibaba.fastjson.util.TypeUtils;
 import com.avoole.cells.data.Cell;
 import com.avoole.cells.data.Message;
 import com.avoole.cells.data.MessageType;
@@ -46,11 +47,13 @@ public class MessageUtil {
         Object payload = null;
         try {
 
-            Class payloadClass = type2payload.getOrDefault(messageType, HashMap.class);
-            payload = json.getObject("payload", payloadClass);
+            Class payloadClass = type2payload.getOrDefault(messageType, Map.class);
+            Object object = json.get("payload");
+            object = TypeUtils.castToJavaBean(object, payloadClass);
+            payload = object;
         }catch (Exception ex){
             //
-            //ex.printStackTrace();
+            ex.printStackTrace();
         }
 
         Message message = new Message();

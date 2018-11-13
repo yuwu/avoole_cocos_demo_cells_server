@@ -8,6 +8,7 @@ import com.avoole.cells.data.Player;
 import com.avoole.cells.storage.WorldStore;
 import com.avoole.cells.util.MessageUtil;
 import io.netty.handler.codec.http.websocketx.WebSocketFrame;
+import io.netty.util.ReferenceCountUtil;
 
 import java.util.HashMap;
 import java.util.List;
@@ -32,23 +33,17 @@ public class PlayerJoinMessageHandler implements MessageHandler {
         targetPlayer.setClient(message.getClient());
         store.addPlayer(targetPlayer);
 
-        List<Cell> cells = store.getCells();
         List<Player> players = store.getPlayers();
-        int width = store.getWidth();
-        int hegiht = store.getHeight();
-
-        Map<String, Object> payload = new HashMap<>();
-        payload.put("width", width);
-        payload.put("hegiht", hegiht);
-        payload.put("cells", cells);
-        payload.put("players", players);
 
         Message newMessage = new Message();
-        newMessage.setPayload(payload);
+        newMessage.setPayload(targetPlayer);
 
-        WebSocketFrame frame = MessageUtil.getMessagePlayerJoin(newMessage);
+
         for(Player player : players){
+            WebSocketFrame frame = MessageUtil.getMessagePlayerJoin(newMessage);
             player.getClient().getCtx().writeAndFlush(frame);
         }
+        //ReferenceCountUtil.release(frame);
+
     }
 }

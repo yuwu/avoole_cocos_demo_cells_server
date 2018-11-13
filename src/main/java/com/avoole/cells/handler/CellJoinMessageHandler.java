@@ -21,7 +21,5 @@ public class CellJoinMessageHandler implements MessageHandler {
             return;
         }
 
-        Player player = store.newPlayer();
-
     }
 }
