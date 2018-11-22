@@ -30,14 +30,14 @@ public class PlayerJoinMessageHandler implements MessageHandler {
         }
 
         Player targetPlayer = (Player)message.getPayload();
-        targetPlayer.setClient(message.getClient());
+        targetPlayer.setId(client.getId());
+        targetPlayer.setClient(client);
         store.addPlayer(targetPlayer);
 
         List<Player> players = store.getPlayers();
 
         Message newMessage = new Message();
         newMessage.setPayload(targetPlayer);
-
 
         for(Player player : players){
             WebSocketFrame frame = MessageUtil.getMessagePlayerJoin(newMessage);

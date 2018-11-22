@@ -23,14 +23,14 @@ public class InMemoryWorldStore implements WorldStore {
     private int height;
 
     public InMemoryWorldStore() {
-        this.width = 50;
-        this.height = 50;
+        this.width = 20;
+        this.height = 20;
         this.colors = new Color[]{Color.BLUE, Color.ORANGE, Color.GREEN, Color.RED, Color.YELLOW, Color.CYAN, Color.MAGENTA};
         this.initCells();
     }
 
     private void initCells(){
-        for(int i=0; i<500; i++){
+        for(int i=0; i<50; i++){
             float x = (float)(Math.random() * (this.width-0.01));
             float y = (float)(Math.random() * (this.height-0.01));
 
@@ -60,6 +60,12 @@ public class InMemoryWorldStore implements WorldStore {
     @Override
     public List<Cell> getCells() {
         return cells.values().stream().collect(Collectors.toList());
+    }
+
+    @Override
+    public boolean hasCell(Cell cell) {
+        if(cell == null || cell.getId() == null) return false;
+        return this.cells.containsKey(cell.getId());
     }
 
     @Override

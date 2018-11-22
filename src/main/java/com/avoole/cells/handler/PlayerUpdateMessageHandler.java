@@ -26,6 +26,8 @@ public class PlayerUpdateMessageHandler implements MessageHandler {
         }
 
         Player targetPlayer = (Player)message.getPayload();
+        targetPlayer.setId(client.getId());
+        targetPlayer.setClient(client);
         if(!store.hasPlayer(targetPlayer)){
             return;
         }

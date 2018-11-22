@@ -35,11 +35,11 @@ public class PlayerDeathMessageHandler implements MessageHandler {
         Message newMessage = new Message();
         newMessage.setPayload(targetPlayer);
 
-        WebSocketFrame frame = MessageUtil.getMessagePlayerDeath(newMessage);
         List<Player> players = store.getPlayers();
         for(Player player : players){
-            player.getClient().getCtx().write(frame);
+            WebSocketFrame frame = MessageUtil.getMessagePlayerDeath(newMessage);
+            player.getClient().getCtx().writeAndFlush(frame);
         }
-        ReferenceCountUtil.release(frame);
+        //ReferenceCountUtil.release(frame);
     }
 }

@@ -17,6 +17,8 @@ public interface WorldStore {
 
     void removeCell(Cell cell);
 
+    boolean hasCell(Cell cell);
+
     Player getPlayer(String id);
 
     Player getPlayer(Client client);

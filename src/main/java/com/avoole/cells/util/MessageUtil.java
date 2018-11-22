@@ -98,4 +98,11 @@ public class MessageUtil {
         TextWebSocketFrame frame = new TextWebSocketFrame(json);
         return frame;
     }
+
+    public static WebSocketFrame getMessageCellDeath(Message message) {
+        message.setType(MessageType.CellDeath);
+        String json = JSON.toJSONString(message);
+        TextWebSocketFrame frame = new TextWebSocketFrame(json);
+        return frame;
+    }
 }
